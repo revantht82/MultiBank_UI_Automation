@@ -1,0 +1,31 @@
+{
+  "pages": [
+    {
+      "name": "Homepage",
+      "path": "/",
+      "description": "Main landing page"
+    },
+    {
+      "name": "Explore",
+      "path": "/en-AE/explore",
+      "description": "Crypto asset explore page"
+    },
+    {
+      "name": "Features",
+      "path": "/en-AE/features",
+      "description": "Platform features page"
+    },
+    {
+      "name": "Company",
+      "path": "/en-AE/company",
+      "description": "About/Company page"
+    }
+  ],
+  "thresholds": {
+    "maxPageLoadTimeMs": 15000,
+    "maxTTFBMs": 3000,
+    "maxDOMContentLoadedMs": 8000,
+    "maxLCPMs": 5000,
+    "maxCLS": 0.25
+  }
+}

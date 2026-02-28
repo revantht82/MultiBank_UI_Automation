@@ -1,0 +1,29 @@
+{
+  "topNavItems": [
+    { "name": "Explore", "path": "/explore", "hrefPattern": "/explore" },
+    { "name": "Features", "path": "/features", "hrefPattern": "/features" },
+    { "name": "Company", "path": "/company", "hrefPattern": "/company" }
+  ],
+  "headerActionLinks": [
+    { "name": "Sign in", "url": "https://trade.mb.io/login" },
+    { "name": "Sign up", "url": "https://trade.mb.io/register" }
+  ],
+  "logo": {
+    "href": "/",
+    "shouldBeVisible": true
+  },
+  "headerStickyPosition": true,
+  "totalHeaderLinks": 7,
+  "footerLegalLinks": [
+    "Cookie Policy",
+    "Terms & Conditions",
+    "Disclaimer",
+    "Code of Conduct",
+    "Privacy Policy"
+  ],
+  "footerSupportLinks": [
+    "Contact Us"
+  ],
+  "minimumNavItemCount": 3,
+  "minimumFooterLinkCount": 5
+}

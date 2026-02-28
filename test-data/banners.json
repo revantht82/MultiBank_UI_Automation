@@ -1,0 +1,45 @@
+{
+  "homepageSections": [
+    {
+      "id": "hero",
+      "expectedTextPatterns": ["crypto"],
+      "description": "Hero section with main CTA"
+    },
+    {
+      "id": "portfolio",
+      "expectedTextPatterns": ["portfolio", "regulated"],
+      "description": "Build portfolio section"
+    },
+    {
+      "id": "trading-features",
+      "expectedTextPatterns": ["trade"],
+      "description": "Trading features section"
+    }
+  ],
+  "minimumSectionCount": 3,
+  "heroSection": {
+    "expectedHeading": "Crypto for everyone",
+    "expectedCtaTexts": ["Download the app", "Open an account"],
+    "expectedVisible": true
+  },
+  "bottomBanners": {
+    "khabibBanner": {
+      "expectedTextPatterns": ["Unblemished", "Unstoppable", "United"],
+      "description": "Khabib partnership MBG Token banner"
+    },
+    "tradingFeaturesPromo": {
+      "expectedHeading": "Smarter ways to trade and grow",
+      "expectedSubHeadings": [
+        "From insight to action in seconds",
+        "Earn more. See more. Stay in control."
+      ],
+      "viewPlatformFeaturesUrl": "trade.mb.io/login"
+    },
+    "catchNextTrade": {
+      "expectedHeading": "Catch your next trade",
+      "expectedCategories": ["Top Gainers", "Trending Now", "Top Losers"],
+      "exploreAllAssetsUrl": "/en-AE/explore"
+    }
+  },
+  "minimumBottomBannerCount": 3
+}

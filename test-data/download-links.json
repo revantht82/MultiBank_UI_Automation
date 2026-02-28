@@ -1,0 +1,37 @@
+{
+  "downloadApp": {
+    "linkText": "Download the app",
+    "expectedUrlPattern": "mbio.go.link",
+    "shouldBeVisible": true
+  },
+  "signUpLink": {
+    "linkText": "Sign up",
+    "expectedUrlPattern": "trade.mb.io/register",
+    "shouldBeVisible": true
+  },
+  "openAccountLink": {
+    "linkText": "Open an account",
+    "expectedUrlPattern": "trade.mb.io/register",
+    "shouldBeVisible": true
+  },
+  "footer": {
+    "expectedLegalLinks": [
+      "Cookie Policy",
+      "Terms & Conditions",
+      "Disclaimer",
+      "Code of Conduct",
+      "Public Complaint Policy",
+      "Public Disclosure",
+      "Privacy Policy",
+      "Client Agreement",
+      "VA Standards",
+      "Acceptable Use Policy"
+    ],
+    "expectedSupportLinks": ["Contact Us"],
+    "hackenAuditUrl": "hacken.io/audits/mb-io",
+    "paymentIcons": ["Mastercard", "Visa", "American Express", "Swift"],
+    "copyrightPattern": "Copyright",
+    "varaDisclosure": "Virtual Asset Regulatory Authority",
+    "minimumFooterLinks": 10
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "companyPage": {
+    "url": "/company",
+    "pageTitle": "Why MultiBank Group?",
+    "expectedHeadings": [
+      "Why MultiBank Group?",
+      "A tradition of global leadership",
+      "Innovation with purpose",
+      "Integrity built into every decision"
+    ],
+    "expectedTextPatterns": [
+      "MultiBank",
+      "global",
+      "regulated",
+      "leadership",
+      "innovation",
+      "integrity"
+    ],
+    "expectedSectionCount": 3,
+    "subHeadings": [
+      "The strength behind MultiBank Group",
+      "Community & Media"
+    ],
+    "stats": {
+      "annualTurnover": "$2 trillion",
+      "customersWorldwide": "2,000,000+",
+      "officesGlobally": "25+"
+    },
+    "strengthCards": [
+      "Regulation at core",
+      "Proven track record",
+      "Secure & trusted"
+    ],
+    "articleImages": [
+      "A Tradition of Global Leadership",
+      "Innovation with Purpose",
+      "Integrity Built Into Every Decision"
+    ],
+    "ctaLinks": {
+      "getInTouch": "/en-AE/support/contact-us"
+    },
+    "minimumImageCount": 10,
+    "minimumParagraphCount": 5
+  },
+  "featuresPage": {
+    "url": "/features",
+    "pageTitle": "The power of crypto is yours",
+    "expectedHeadings": [
+      "The power of crypto is yours",
+      "Easily explore opportunities",
+      "Buy, sell, convert in three taps",
+      "Earn yield that feels rewarding"
+    ],
+    "additionalHeadings": [
+      "Smart asset insights at a glance",
+      "Clearly presented wallet portfolio",
+      "$MBG unlocks mb.io benefits"
+    ],
+    "solutionsSection": {
+      "heading": "Solutions with advantages",
+      "expectedCards": [
+        "Fiat on/off ramps",
+        "Heavily regulated"
+      ]
+    },
+    "vipSection": {
+      "headingPattern": "Experience benefits that scale with you"
+    },
+    "minimumSectionCount": 3,
+    "minimumFeatureImages": 10
+  }
+}

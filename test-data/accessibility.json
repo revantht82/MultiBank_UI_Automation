@@ -1,0 +1,27 @@
+{
+  "pages": [
+    {
+      "name": "Homepage",
+      "path": "/",
+      "description": "Main landing page"
+    },
+    {
+      "name": "Explore",
+      "path": "/en-AE/explore",
+      "description": "Crypto asset explore page"
+    },
+    {
+      "name": "Features",
+      "path": "/en-AE/features",
+      "description": "Platform features page"
+    },
+    {
+      "name": "Company",
+      "path": "/en-AE/company",
+      "description": "About/Company page"
+    }
+  ],
+  "wcagLevel": "wcag2aa",
+  "maxCriticalViolations": 1,
+  "maxSeriousViolations": 5
+}

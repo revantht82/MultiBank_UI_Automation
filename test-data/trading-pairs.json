@@ -1,0 +1,31 @@
+{
+  "exploreTabs": [
+    "Hot",
+    "Gainers",
+    "Losers"
+  ],
+  "expectedCryptoAssets": [
+    { "name": "Bitcoin", "symbol": "BTC" },
+    { "name": "Ethereum", "symbol": "ETH" },
+    { "name": "Solana", "symbol": "SOL" },
+    { "name": "XRP", "symbol": "XRP" },
+    { "name": "Dogecoin", "symbol": "DOGE" }
+  ],
+  "minimumAssetsOnHomepage": 5,
+  "explorePageUrl": "/explore",
+  "spotMarket": {
+    "headings": [
+      "Spot market",
+      "Market sentiment"
+    ],
+    "minimumAssetsPerCategory": 5,
+    "assetsPerTab": 15,
+    "expectedHrefPattern": "/explore/",
+    "cardStructure": {
+      "hasSymbol": true,
+      "hasName": true,
+      "hasIcon": true,
+      "hrefFormat": "/explore/{SYMBOL}"
+    }
+  }
+}
