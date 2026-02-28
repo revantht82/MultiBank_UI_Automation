@@ -6,4 +6,3 @@ blob-report/
 allure-results/
 *.tsbuildinfo
 .DS_Store
-.env
