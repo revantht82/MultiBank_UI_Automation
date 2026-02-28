@@ -1,0 +1,197 @@
+name: Playwright Tests
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [chromium, firefox, webkit]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install npm dependencies
+        run: |
+          echo "Installing npm dependencies..."
+          npm ci
+          echo "Verifying critical packages..."
+          for pkg in @playwright/test allure-playwright allure-commandline @axe-core/playwright typescript; do
+            if [ ! -d "node_modules/$pkg" ]; then
+              echo "ERROR: Package $pkg not found after npm ci"
+              exit 1
+            fi
+          done
+          echo "All npm dependencies installed successfully."
+
+      - name: Install Playwright Browsers
+        run: |
+          echo "Installing Playwright browser: ${{ matrix.project }}..."
+          npx playwright install --with-deps ${{ matrix.project }}
+          echo "Verifying browser installation..."
+          npx playwright install --dry-run ${{ matrix.project }} 2>&1 || true
+          echo "Browser ${{ matrix.project }} installed successfully."
+
+      - name: Run Playwright tests
+        run: npx playwright test --project=${{ matrix.project }}
+        env:
+          CI: true
+          BASE_URL: https://mb.io/
+
+      - name: Generate Allure Report
+        if: ${{ !cancelled() }}
+        run: |
+          if [ -d "allure-results" ] && [ "$(ls -A allure-results 2>/dev/null)" ]; then
+            npm run allure:generate
+            echo "Allure report generated successfully."
+          else
+            echo "WARNING: No allure-results found. Skipping report generation."
+          fi
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: allure-report-${{ matrix.project }}
+          path: allure-report/
+          retention-days: 14
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: allure-results-${{ matrix.project }}
+          path: |
+            allure-results/
+            test-results/
+          retention-days: 14
+
+  accessibility:
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install npm dependencies
+        run: |
+          npm ci
+          if [ ! -d "node_modules/@axe-core/playwright" ]; then
+            echo "ERROR: @axe-core/playwright not found — required for accessibility tests"
+            exit 1
+          fi
+          echo "Dependencies ready for accessibility tests."
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Accessibility tests
+        run: npx playwright test tests/accessibility.spec.ts --project=chromium
+        env:
+          CI: true
+          BASE_URL: https://mb.io/
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: a11y-results
+          path: |
+            allure-results/
+            test-results/
+          retention-days: 14
+
+  performance:
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install npm dependencies
+        run: |
+          npm ci
+          echo "Dependencies ready for performance tests."
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Performance tests
+        run: npx playwright test tests/performance.spec.ts --project=chromium
+        env:
+          CI: true
+          BASE_URL: https://mb.io/
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: perf-results
+          path: |
+            allure-results/
+            test-results/
+          retention-days: 14
+
+  cloud-tests:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Verify BrowserStack credentials
+        run: |
+          if [ -z "$BROWSERSTACK_USERNAME" ] || [ -z "$BROWSERSTACK_ACCESS_KEY" ]; then
+            echo "ERROR: BrowserStack credentials not configured."
+            echo "  Set BROWSERSTACK_USERNAME and BROWSERSTACK_ACCESS_KEY in repository secrets."
+            exit 1
+          fi
+          echo "BrowserStack credentials verified."
+        env:
+          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+
+      - name: Run tests on BrowserStack
+        run: npx playwright test --project=chromium
+        env:
+          CI: true
+          BASE_URL: https://mb.io/
+          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: cloud-results
+          path: |
+            allure-results/
+            test-results/
+          retention-days: 14
