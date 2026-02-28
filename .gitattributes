@@ -1,1 +1,1 @@
-allure-report/index.html filter=lfs diff=lfs merge=lfs -text
+allure-report/*.html filter=lfs diff=lfs merge=lfs -text

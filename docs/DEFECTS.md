@@ -1,6 +1,8 @@
 # MultiBank UI Automation — Defect Log
 
-## Test Run Summary
+## Test Run History
+
+### Run 1 — Desktop (2026-02-28)
 
 | Field | Value |
 |-------|-------|
@@ -11,6 +13,19 @@
 | **Failed** | 0 |
 | **Flaky** | 0 |
 | **Duration** | 6.7 minutes |
+
+### Run 2 — Samsung S26 Ultra Mobile (2026-02-28)
+
+| Field | Value |
+|-------|-------|
+| **Date** | 2026-02-28 |
+| **Projects** | Chromium-Samsung-S26-Ultra (412×915), Firefox-Samsung-S26-Ultra (412×915), WebKit-Samsung-S26-Ultra (412×915) |
+| **Total Tests** | 420 (140 tests × 3 browsers) |
+| **Passed** | 278 |
+| **Failed** | 140 (all Firefox — `isMobile` not supported) |
+| **Flaky** | 2 (WebKit — hamburger menu timing) |
+| **Skipped** | 2 (accessibility — Chromium-only by design) |
+| **Duration** | 5.3 minutes |
 | **Playwright** | v1.58.2 |
 | **Node.js** | v24.9.0 |
 
@@ -20,7 +35,9 @@
 
 | Defect ID | Severity | Browser | Spec File | Test Name | Description | Steps to Reproduce | Expected | Actual | Status |
 |-----------|----------|---------|-----------|-----------|-------------|---------------------|----------|--------|--------|
-| — | — | — | — | — | No defects found in this run | — | — | — | — |
+| DEF-001 | Critical | Firefox | All 7 spec files | All 140 Firefox mobile tests | `isMobile` context option is not supported in Firefox (Playwright limitation). Config sets `isMobile: true` for `firefox-samsung-s26-ultra` and `firefox-iphone-17-pro-max` projects, causing instant crash on browser context creation. | 1. Run `npx playwright test --project=firefox-samsung-s26-ultra` | Tests execute with mobile viewport in Firefox | `browser.newContext: options.isMobile is not supported in Firefox` — all 140 tests fail in ~3ms each | Fixed |
+| DEF-002 | Low | WebKit | `navigation.spec.ts` | "Explore" link should have correct href pattern | Flaky — hamburger menu animation timing on 412px viewport occasionally causes element not found. Passes on retry. | 1. Run `npx playwright test --project=webkit-samsung-s26-ultra tests/navigation.spec.ts:83` multiple times | Hamburger menu opens, Explore link href is read | Intermittent timeout (~32s) waiting for menu element. Passes on retry 1/2. | Open |
+| DEF-003 | Low | WebKit | `navigation.spec.ts` | should navigate to Features page | Flaky — navigation via hamburger menu on 412px viewport intermittently slow. Passes on retry. | 1. Run `npx playwright test --project=webkit-samsung-s26-ultra tests/navigation.spec.ts:125 --grep=Features` multiple times | Page navigates to /features within timeout | Intermittent timeout (~6.8s). Passes on retry. | Open |
 
 ---
 
